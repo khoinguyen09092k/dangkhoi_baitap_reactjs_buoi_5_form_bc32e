@@ -15,6 +15,7 @@ class DanhSachDangKy extends Component {
                         <th className="p-3">Số điện thoại</th>
                         <th className="p-3">Email</th>
                         <th className="p-3"></th>
+                    
                     </tr>
                 </thead>
                 <tbody className='border-b text-lg'> 

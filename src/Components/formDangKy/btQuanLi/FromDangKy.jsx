@@ -8,9 +8,11 @@ class FromDangKy extends Component {
       tenSV: '',
       sdt: '',
       email: '',
+      sreach:'',
     },
     error: {}
   }
+  
 
   handleState = (event) => {
     const { name, value } = event.target
@@ -21,18 +23,29 @@ class FromDangKy extends Component {
       }
     })
 
+
+  }
+
+  handleSreach = (event)=>{
+    this.props.dispatch({
+          type: 'SREACH_USER',
+          payload: this.state.values.sreach
+        })
+       
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    if(!event.target.checkValidity()){
+    if (!event.target.checkValidity()) {
       return
     }
     // console.log(event.target.checkValidity());
     this.props.dispatch({
-      type: this.props.selectedUsers ? 'UPDATE_USER': 'ADD_USER',
+      type: this.props.selectedUsers ? 'UPDATE_USER' : 'ADD_USER',
       payload: this.state.values
     })
+  
+
   }
 
   handleBlur = (event) => {
@@ -63,22 +76,23 @@ class FromDangKy extends Component {
         [name]: mess
       }
     })
- 
+
   }
 
-  static getDerivedStateFromProps = (nextProps,currentState)=>{
-    console.log( nextProps,currentState);
+  static getDerivedStateFromProps = (nextProps, currentState) => {
+    console.log(nextProps, currentState);
 
-        if(nextProps.selectedUsers && nextProps.selectedUsers.id !== currentState.values.id){
-            currentState.values = nextProps.selectedUsers
-        }
+    if (nextProps.selectedUsers && nextProps.selectedUsers.id !== currentState.values.id) {
+      currentState.values = nextProps.selectedUsers
+    }
 
-        return currentState
-}
+    return currentState
+  }
   render() {
-    const {selectedUsers} = this.props
-    const {maSV,tenSV,sdt,email} =this.state.values || {}
-   
+    const { selectedUsers ,mangNguoiDung} = this.props
+    console.log("mangNguoiDung: ", mangNguoiDung);
+    const { maSV, tenSV, sdt, email } = this.state.values || {}
+
     return (
       <div >
         <form
@@ -95,7 +109,7 @@ class FromDangKy extends Component {
               <p className='text-xl'>Mã Sinh Viên</p>
               <input
                 required
-                minLength={4}
+                minLength={1}
                 maxLength={12}
                 type="text"
                 name='maSV'
@@ -104,7 +118,7 @@ class FromDangKy extends Component {
                 onChange={this.handleState}
                 onBlur={this.handleBlur}
 
-                className='border-2 border-black rounded-lg w-100 p-2' />
+                className='border-2 border-black rounded-lg w-100 p-2 hover:border-red-400  ' />
               <br />
               <span className='text-red-500 '>{this.state.error.maSV}</span>
             </div>
@@ -122,7 +136,7 @@ class FromDangKy extends Component {
                 onChange={this.handleState}
                 onBlur={this.handleBlur}
 
-                className='border-2 border-black rounded-lg w-100 p-2' />
+                className='border-2 border-black rounded-lg w-100 p-2 hover:border-red-400' />
               <br />
               <span className='text-red-500 '>{this.state.error.tenSV}</span>
 
@@ -141,7 +155,7 @@ class FromDangKy extends Component {
                 onChange={this.handleState}
                 onBlur={this.handleBlur}
 
-                className='border-2 border-black rounded-lg w-100 p-2' />
+                className='border-2 border-black rounded-lg w-100 p-2 hover:border-red-400' />
               <br />
               <span className='text-red-500 '>{this.state.error.sdt}</span>
 
@@ -153,25 +167,37 @@ class FromDangKy extends Component {
                 type="text"
                 name='email'
                 title='Email'
-                
+
                 pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
                 onChange={this.handleState}
                 onBlur={this.handleBlur}
                 value={email}
 
-                className='border-2 border-black rounded-lg w-100 p-2' />
+                className='border-2 border-black rounded-lg w-100 p-2 hover:border-red-400' />
               <br />
               <span className='text-red-500 '>{this.state.error.email}</span>
 
             </div>
 
           </div>
-          <button type='submit' className={`mr-3 mt-3 p-4 bg-blue-400 text-white rounded-lg  cursor-pointer hover:bg-blue-700 
-                ${!this.props.selectedUsers?"":'hidden'}`}>Đăng Ký</button>
-                <button type='submit'className={ `mr-3 p-4 mt-3 bg-red-400 text-white rounded-lg  cursor-pointer hover:bg-red-700 
-                ${this.props.selectedUsers??'hidden'}`} // ?? bắt giá trị null
-               
-                >Cập Nhật</button>
+          <button type='submit' className={`mr-3 mt-3 p-3 bg-blue-400 text-white rounded-lg  cursor-pointer hover:bg-blue-700 
+                ${!this.props.selectedUsers ? "" : 'hidden'}`}>Đăng Ký</button>
+          <button type='submit' className={`mr-3 p-3 mt-3 bg-red-400 text-white rounded-lg  cursor-pointer hover:bg-red-700 
+                ${this.props.selectedUsers ?? 'hidden'}`} // ?? bắt giá trị null
+
+          >Cập Nhật</button>
+          <br />
+
+          <input 
+          type="text" 
+          name='sreach'  
+           className='border-2 border-black rounded-lg w-100 p-2 hover:border-red-400' 
+           onChange={this.handleState}  
+           />
+          <button type='submit' className='ml-3 mt-3 p-3 bg-blue-400 text-white rounded-lg  cursor-pointer hover:bg-blue-700 
+                 ' onClick={this.handleSreach}>Search <i class="fa-solid fa-magnifying-glass"
+                 
+                 ></i></button>
 
         </form>
 

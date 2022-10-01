@@ -22,6 +22,7 @@ export const formDangKy = (state = stateDefault, { type, payload }) => {
             const data =state.mangNguoiDung.filter(item=>item.id !== payload)
             return {...state,mangNguoiDung:data}
         }
+
         case 'EDIT_USER':{
             const user  = state.mangNguoiDung.find(item=>item.id === payload)
             return {...state,selectedUsers:user}
@@ -35,6 +36,11 @@ export const formDangKy = (state = stateDefault, { type, payload }) => {
             })
             state.selectedUsers = null
             return {...state,mangNguoiDung:newUserList}
+        }
+        case 'SREACH_USER':{
+            const data =state.mangNguoiDung.filter(item=>item.maSV === payload)
+            return {...state,mangNguoiDung:data}
+            
         }
         default:
             return state
