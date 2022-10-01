@@ -109,7 +109,7 @@ class FromDangKy extends Component {
               <p className='text-xl'>Mã Sinh Viên</p>
               <input
                 required
-                minLength={1}
+                minLength={4}
                 maxLength={12}
                 type="text"
                 name='maSV'
